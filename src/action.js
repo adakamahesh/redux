@@ -1,3 +1,15 @@
+export function addTodo(todo){
+    return {type:"Add_todo",payload:todo}
+}
+
+export function editTodo(todo){
+    return {type:"Edit_todo",payload:todo}
+}
+
+export function deleteTodo(id){
+    return {type:"Add_todo",payload:id}
+}
+
 export function deposit(amount){
     return {type:"deposit",payload:amount}
 }
