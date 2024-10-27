@@ -7,7 +7,7 @@ export function editTodo(todo){
 }
 
 export function deleteTodo(id){
-    return {type:"Add_todo",payload:id}
+    return {type:"Delete_todo",payload:id}
 }
 
 export function deposit(amount){
