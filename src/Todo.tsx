@@ -1,31 +1,28 @@
 import { useState } from "react";
-import { editTodo, deleteTodo } from "./action";
+import { editTodo, deleteTodo } from "./action"; // Ensure action imports are correct
 import { useDispatch } from "react-redux";
+import { AppDispatch } from "./store";
 
-// Define props type
 interface TodoProps {
   id: number;
   title: string;
 }
 
 const Todo: React.FC<TodoProps> = ({ id, title }) => {
-  // Define state with types
   const [editing, setEditing] = useState<boolean>(false);
   const [newTitle, setNewTitle] = useState<string>(title);
   
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>(); // Using AppDispatch for typed dispatch
 
-  // Handle editing of a todo item
   const handleTodo = () => {
     if (newTitle.trim()) {
-      dispatch(editTodo({ id, title: newTitle }));  // Dispatch edit action
-      setEditing(false);  // Exit editing mode
+      dispatch(editTodo({ id, title: newTitle })); // Dispatch edit action
+      setEditing(false);
     }
   };
 
-  // Handle deletion of a todo item
   const handleDelete = () => {
-    dispatch(deleteTodo(id));  // Dispatch delete action
+    dispatch(deleteTodo(id)); // Dispatch delete action
   };
 
   return (

@@ -1,8 +1,6 @@
-// store.ts
-import { combineReducers, createStore } from "redux";
-import { RootState } from "./store";
+import { createStore, combineReducers } from "redux";
 
-// Define the types for each part of the state
+// Define State Types
 interface Todo {
   id: number;
   title: string;
@@ -28,7 +26,7 @@ interface Transaction {
 
 type TransactionState = Transaction[];
 
-// Initial states
+// Initial States
 const initialTodoState: TodoState = {
   todos: [],
   nextId: 1,
@@ -42,18 +40,18 @@ const initialAccountState: AccountState = {
 
 const initialTransactionState: TransactionState = [];
 
-// Define action types
+// Action Types
 type TodoAction =
-  | { type: "Add_todo"; payload: { title: string } }
-  | { type: "Edit_todo"; payload: { id: number; title: string } }
-  | { type: "Delete_todo"; payload: number };
+  | { type: "ADD_TODO"; payload: { title: string } }
+  | { type: "EDIT_TODO"; payload: { id: number; title: string } }
+  | { type: "DELETE_TODO"; payload: number };
 
 type AccountAction =
-  | { type: "deposit"; payload: number }
-  | { type: "withdraw"; payload: number }
-  | { type: "mobileUpdate"; payload: string }
-  | { type: "nameUpdate"; payload: string }
-  | { type: "reset" };
+  | { type: "DEPOSIT"; payload: number }
+  | { type: "WITHDRAW"; payload: number }
+  | { type: "UPDATE_MOBILE"; payload: string }
+  | { type: "UPDATE_NAME"; payload: string }
+  | { type: "RESET" };
 
 type TransactionAction = {
   type: "ADD_TRANSACTION";
@@ -68,21 +66,21 @@ type TransactionAction = {
 // Reducers
 const todoReducer = (state: TodoState = initialTodoState, action: TodoAction): TodoState => {
   switch (action.type) {
-    case "Add_todo":
+    case "ADD_TODO":
       const newTodo: Todo = { id: state.nextId, title: action.payload.title };
       return {
         ...state,
         todos: [...state.todos, newTodo],
         nextId: state.nextId + 1,
       };
-    case "Edit_todo":
+    case "EDIT_TODO":
       return {
         ...state,
         todos: state.todos.map((todo) =>
           todo.id === action.payload.id ? { ...todo, title: action.payload.title } : todo
         ),
       };
-    case "Delete_todo":
+    case "DELETE_TODO":
       return {
         ...state,
         todos: state.todos.filter((todo) => todo.id !== action.payload),
@@ -94,15 +92,15 @@ const todoReducer = (state: TodoState = initialTodoState, action: TodoAction): T
 
 const accountReducer = (state: AccountState = initialAccountState, action: AccountAction): AccountState => {
   switch (action.type) {
-    case "deposit":
+    case "DEPOSIT":
       return { ...state, balance: state.balance + action.payload };
-    case "withdraw":
+    case "WITHDRAW":
       return { ...state, balance: state.balance - action.payload };
-    case "mobileUpdate":
+    case "UPDATE_MOBILE":
       return { ...state, mobile: action.payload };
-    case "nameUpdate":
+    case "UPDATE_NAME":
       return { ...state, fullName: action.payload };
-    case "reset":
+    case "RESET":
       return initialAccountState;
     default:
       return state;
@@ -126,15 +124,18 @@ const transactionReducer = (state: TransactionState = initialTransactionState, a
   }
 };
 
-// Combine reducers
+// Combine Reducers
 const rootReducer = combineReducers({
   account: accountReducer,
   transaction: transactionReducer,
   todo: todoReducer,
 });
 
-// Define RootState and configure store
+// Define RootState and AppDispatch Types
 export type RootState = ReturnType<typeof rootReducer>;
+export type AppDispatch = typeof store.dispatch;
+
+// Create Store
 const store = createStore(rootReducer);
 
 export default store;

@@ -4,27 +4,25 @@ import Forms from "./Forms";
 import Account from "./Account";
 import { useState } from "react";
 import TodoList from "./TodoList";
+import type { AppDispatch } from "./store";  
 
-// Define the type for a Todo item
 interface Todo {
   id: number;
   title: string;
 }
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();  // Typed dispatch
 
-  // Specify todoTitle as a string in useState
   const [todoTitle, setTodoTitle] = useState<string>("");
 
-  // Function to handle adding a new todo
   const handleTodo = () => {
     if (todoTitle.trim()) {
       const newTodo: Todo = {
         id: Date.now(),
         title: todoTitle.trim(),
       };
-      dispatch(addTodo(newTodo));
+      dispatch(addTodo(newTodo));  // Dispatch the action
       setTodoTitle("");
     }
   };
