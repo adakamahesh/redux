@@ -62,6 +62,8 @@ type TransactionAction = {
     date: Date;
   };
 };
+// Aggregate RootAction for all reducers
+type RootAction = TodoAction | AccountAction | TransactionAction;
 
 // Reducers
 const todoReducer = (state: TodoState = initialTodoState, action: TodoAction): TodoState => {
@@ -89,16 +91,16 @@ const todoReducer = (state: TodoState = initialTodoState, action: TodoAction): T
       return state;
   }
 };
-
-const accountReducer = (state: AccountState = initialAccountState, action: AccountAction): AccountState => {
+  
+const accountReducer = (state: AccountState = initialAccountState, action: any): AccountState => {
   switch (action.type) {
     case "DEPOSIT":
       return { ...state, balance: state.balance + action.payload };
     case "WITHDRAW":
       return { ...state, balance: state.balance - action.payload };
-    case "UPDATE_MOBILE":
+    case "MOBILE_UPDATE":
       return { ...state, mobile: action.payload };
-    case "UPDATE_NAME":
+    case "NAME_UPDATE":
       return { ...state, fullName: action.payload };
     case "RESET":
       return initialAccountState;

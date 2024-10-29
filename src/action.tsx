@@ -7,49 +7,49 @@ export const WITHDRAW = "WITHDRAW";
 export const NAME_UPDATE = "NAME_UPDATE";
 export const MOBILE_UPDATE = "MOBILE_UPDATE";
 export const RESET = "RESET";
-export const ADD_TRANSACTION = "ADD_TRANSACTION"; // Add this line for the transaction action type
+export const ADD_TRANSACTION = "ADD_TRANSACTION";
 
 // Define interfaces for each action type
 interface AddTodoAction {
     type: typeof ADD_TODO;
-    payload: { title: string };  // The structure of a todo
+    payload: { title: string }; // Payload structure for adding a todo
 }
 
 interface EditTodoAction {
     type: typeof EDIT_TODO;
-    payload: { id: number; title: string };  // Customize based on your todo structure
+    payload: { id: number; title: string }; // Payload structure for editing a todo
 }
 
 interface DeleteTodoAction {
     type: typeof DELETE_TODO;
-    payload: number; // The ID of the todo to delete
+    payload: number; // ID of the todo to delete
 }
 
 interface DepositAction {
     type: typeof DEPOSIT;
-    payload: number; // The amount to deposit
+    payload: number; // Deposit amount
 }
 
 interface WithdrawAction {
     type: typeof WITHDRAW;
-    payload: number; // The amount to withdraw
+    payload: number; // Withdraw amount
 }
 
 interface NameUpdateAction {
     type: typeof NAME_UPDATE;
-    payload: string; // The updated name
+    payload: string; // Updated name
 }
 
 interface MobileUpdateAction {
     type: typeof MOBILE_UPDATE;
-    payload: string; // The updated mobile number
+    payload: string; // Updated mobile number
 }
 
 interface ResetAction {
     type: typeof RESET;
 }
 
-interface AddTransactionAction { // Define the interface for the add transaction action
+interface AddTransactionAction {
     type: typeof ADD_TRANSACTION;
     payload: {
         id: number;
